@@ -115,6 +115,9 @@ extern SPI_HandleTypeDef SSD1306_SPI_PORT;
 #define SSD1306_BUFFER_SIZE   SSD1306_WIDTH * SSD1306_HEIGHT / 8
 #endif
 
+// LCD width divided by smallest font width (6 px).
+#define SSD1306_MAX_STR_LEN		(SSD1306_WIDTH / 6)
+
 // Enumeration for screen colors
 typedef enum {
     Black = 0x00, // Black color, no pixel
@@ -184,6 +187,9 @@ SSD1306_Error_t ssd1306_FillBuffer(uint8_t* buf, uint32_t len);
 void ssd1306_SendCommandDMA (uint8_t cmd);
 void ssd1306_SendBufferChunkDMA (uint16_t idx, uint16_t len);
 uint8_t ssd1306_IsInterfaceReady (void);
+
+uint8_t ssd1306_WriteStringFormat (FontDef Font, SSD1306_COLOR color, char* format, ...);
+
 _END_STD_C
 
 #endif // __SSD1306_H__

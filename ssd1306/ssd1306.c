@@ -2,6 +2,8 @@
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>  // For memcpy
+#include <stdio.h>
+#include <stdarg.h>
 
 #if defined(SSD1306_USE_I2C)
 
@@ -498,4 +500,25 @@ void ssd1306_SetDisplayOn(const uint8_t on) {
 
 uint8_t ssd1306_GetDisplayOn() {
     return SSD1306.DisplayOn;
+}
+
+uint8_t ssd1306_WriteStringFormat (FontDef Font, SSD1306_COLOR color, char* format, ...)
+{
+	// Initialise string.
+    char str[SSD1306_MAX_STR_LEN];
+	memset(str, 0x00, SSD1306_MAX_STR_LEN);
+
+	// Build string.
+	va_list argp;
+	va_start(argp, format);
+	int size = vsnprintf(str, SSD1306_MAX_STR_LEN, format, argp);
+	va_end(argp);
+
+	if (size > 0)
+	{
+		char ch = ssd1306_WriteString(str, Font, color);
+		return ch;
+	}
+
+	return 0; // Not OK.
 }
