@@ -188,7 +188,7 @@ void ssd1306_SendCommandDMA (uint8_t cmd);
 void ssd1306_SendBufferChunkDMA (uint16_t idx, uint16_t len);
 uint8_t ssd1306_IsInterfaceReady (void);
 
-uint8_t ssd1306_WriteStringFormat (FontDef Font, SSD1306_COLOR color, char* format, ...);
+uint8_t ssd1306_WriteStringFormat (SSD1306_COLOR color, char* format, ...);
 
 _END_STD_C
 

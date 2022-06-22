@@ -502,8 +502,12 @@ uint8_t ssd1306_GetDisplayOn() {
     return SSD1306.DisplayOn;
 }
 
-uint8_t ssd1306_WriteStringFormat (FontDef Font, SSD1306_COLOR color, char* format, ...)
+#ifdef SSD1306_IFACE_BLECH
+uint8_t ssd1306_WriteStringFormat (SSD1306_COLOR color, char* format, ...)
 {
+	// Always use 6x8.
+	FontDef Font = Font_6x8;
+
 	// Initialise string.
     char str[SSD1306_MAX_STR_LEN];
 	memset(str, 0x00, SSD1306_MAX_STR_LEN);
@@ -522,3 +526,4 @@ uint8_t ssd1306_WriteStringFormat (FontDef Font, SSD1306_COLOR color, char* form
 
 	return 0; // Not OK.
 }
+#endif
