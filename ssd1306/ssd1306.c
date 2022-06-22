@@ -59,6 +59,21 @@ static uint8_t SSD1306_Buffer[SSD1306_BUFFER_SIZE];
 // Screen object
 static SSD1306_t SSD1306;
 
+#if defined(SSD1306_IFACE_BLECH) && defined(SSD1306_USE_I2C)
+	void ssd1306_SendCommandDMA (uint8_t cmd) {
+		HAL_I2C_Mem_Write_DMA(&SSD1306_I2C_PORT, SSD1306_I2C_ADDR, 0x00, 1, &cmd, 1);
+	}
+
+	void ssd1306_SendBufferChunkDMA (uint16_t idx, uint16_t len) {
+		HAL_I2C_Mem_Write_DMA(&SSD1306_I2C_PORT, SSD1306_I2C_ADDR, 0x40, 1, &SSD1306_Buffer[idx], len);
+	}
+
+	uint8_t ssd1306_IsInterfaceReady (void) {
+		HAL_I2C_StateTypeDef state = HAL_I2C_GetState(&SSD1306_I2C_PORT);
+		return state == HAL_I2C_STATE_READY;
+	}
+#endif
+
 /* Fills the Screenbuffer with values from a given buffer of a fixed length */
 SSD1306_Error_t ssd1306_FillBuffer(uint8_t* buf, uint32_t len) {
     SSD1306_Error_t ret = SSD1306_ERR;

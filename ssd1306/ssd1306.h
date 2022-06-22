@@ -178,6 +178,12 @@ void ssd1306_WriteCommand(uint8_t byte);
 void ssd1306_WriteData(uint8_t* buffer, size_t buff_size);
 SSD1306_Error_t ssd1306_FillBuffer(uint8_t* buf, uint32_t len);
 
+//
+// Non-blocking DMA extensions for interfacing Blech code.
+//
+void ssd1306_SendCommandDMA (uint8_t cmd);
+void ssd1306_SendBufferChunkDMA (uint16_t idx, uint16_t len);
+uint8_t ssd1306_IsInterfaceReady (void);
 _END_STD_C
 
 #endif // __SSD1306_H__
