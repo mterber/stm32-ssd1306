@@ -293,6 +293,12 @@ void ssd1306_SetCursor(uint8_t x, uint8_t y) {
     SSD1306.CurrentY = y;
 }
 
+void ssd1306_GetCursor(uint8_t* x, uint8_t* y) {
+    *x = SSD1306.CurrentX;
+    *y = SSD1306.CurrentY;
+}
+
+
 // Draw line by Bresenhem's algorithm
 void ssd1306_Line(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, SSD1306_COLOR color) {
   int32_t deltaX = abs(x2 - x1);
